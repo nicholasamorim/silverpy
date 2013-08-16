@@ -1,0 +1,20 @@
+<Envelope>
+    <Body>
+        <RES>
+            <SUCCESS>false</SUCCESS>
+        </RES>
+        <Fault>
+            <Request/>
+            <FaultCode/>
+            <FaultString><![CDATA[Unable to remove the recipient. The list is private and you are not the owner.]]></FaultString>
+            <detail>
+                <error>
+                    <errorid>140</errorid>
+                    <module/>
+                    <class>SP.Recipients</class>
+                    <method/>
+                </error>
+            </detail>
+        </Fault>
+    </Body>
+</Envelope>
