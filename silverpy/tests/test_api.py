@@ -1,9 +1,12 @@
-import unittest2 as unittest
+import unittest
+
+import sys
+sys.path.append('.')
 
 from lxml import etree
 
+from api import API
 
-from api import SilverpopApi, pretty_print
 
 class TestSilverpopApi(unittest.TestCase):
     """Test methods that aren't directly dependant
@@ -12,10 +15,10 @@ class TestSilverpopApi(unittest.TestCase):
     To test: unit2 discover
     """
     def setUp(self):
-        self.api = SilverpopApi(
-            username = 'test',
-            password = 'test',
-            url = 'testURL',
+        self.api = API(
+            username='test',
+            password='test',
+            url='testURL',
         )
 
     def test_envelope(self):
@@ -25,17 +28,16 @@ class TestSilverpopApi(unittest.TestCase):
 
         self.assertIsInstance(envelope, tuple)
         self.assertEqual(len(envelope), 2)
-        
+
         self.assertEqual(envelope[0].tag, 'Envelope')
         self.assertEqual(envelope[1].tag, 'Test')
-        
+
         self.assertEqual(etree.tostring(envelope[0]), expected)
 
         self.assertIsInstance(envelope[0], etree._Element)
 
         with self.assertRaises(TypeError):
             self.api._envelope(123)
-
 
     def test_is_successful_with_successful_response(self):
         tree = etree.parse('tests/test_response.xml')
@@ -61,11 +63,13 @@ class TestSilverpopApi(unittest.TestCase):
 
         self.assertIsInstance(info_tuple[0], bool)
         self.assertFalse(info_tuple[0])
-        
+
         self.assertIsInstance(info_tuple[1], tuple)
 
         error = info_tuple[1]
-        expected_error_msg = """Unable to remove the recipient. The list is private and you are not the owner."""
+        expected_error_msg = (
+            "Unable to remove the recipient. "
+            "The list is private and you are not the owner.")
 
         self.assertEqual(error[0], '140')
         self.assertEqual(error[1], expected_error_msg)
@@ -88,8 +92,8 @@ class TestSilverpopApi(unittest.TestCase):
     def test_create_child_element(self):
         root, action_node = self.api._envelope('Test')
         dict_columns = {
-            'name' : 'Droichead Orga', 
-            'email' : 'tastail@dedsert.com'
+            'name': 'Droichead Orga',
+            'email': 'tastail@dedsert.com'
         }
 
         self.api._create_child_element(action_node, 'COLUMN', dict_columns)
@@ -122,3 +126,7 @@ class TestSilverpopApi(unittest.TestCase):
 
         self.assertIsNotNone(session)
         self.assertEqual(len(session), 32)
+
+
+if __name__ == '__main__':
+    unittest.main()

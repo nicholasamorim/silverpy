@@ -27,13 +27,13 @@ def pretty_print(doc):
     print(etree.tostring(doc, pretty_print=True))
 
 
-class Api(object):
+class API(object):
     """This class manages the access to Silverpop Engage API.
 
     Usage is as simple as:
     from silverpy import Api
 
-    api = Api('user', 'passwd', 'silverpop_url')
+    api = API('user', 'passwd', 'silverpop_url')
     api.login()
     api.add_recipient(...)
     api.logout()

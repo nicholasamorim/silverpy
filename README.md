@@ -9,9 +9,9 @@ Usage
 Usage is as simple as:
 
 ```
-from silverpy import Api
+from silverpy import API
 
-api = Api('user', 'passwd', 'silverpop_url')
+api = API('user', 'passwd', 'silverpop_url')
 api.login()
 api.add_recipient(...)
 api.logout()
